@@ -1,0 +1,12 @@
+apiVersion: v2
+name: audiobookshelf
+description: A Helm chart for Audiobookshelf
+type: application
+version: 0.1.0
+appVersion: "2.2.15"
+maintainers:
+- email: opensource@nicolas2bonfils.com
+  name: nicolas2bonfils
+sources:
+- https://github.com/advplyr/audiobookshelf
+- https://github.com/nicolas2bonfils/helm-audiobookshelf
