@@ -12,6 +12,29 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+persistence:
+  enabled: true
+  name: audiobookshelf
+  accessMode: ReadWriteOnce
+  storageClass: ""
+  annotations: {}
+  config:
+    existingClaim: ""
+    size: 1Gi
+    # subPath: "" # only mount a subpath of the Volume into the pod
+  metadata:
+    existingClaim: ""
+    size: 1Gi
+    # subPath: "" # only mount a subpath of the Volume into the pod
+  audiobooks:
+    existingClaim: ""
+    size: 10Gi
+    # subPath: "" # only mount a subpath of the Volume into the pod
+  podcasts:
+    existingClaim: ""
+    size: 10Gi
+    # subPath: "" # only mount a subpath of the Volume into the pod
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

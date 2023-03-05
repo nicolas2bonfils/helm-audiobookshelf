@@ -1,0 +1,97 @@
+{{- if .Values.persistence.enabled -}}
+{{- if not .Values.persistence.config.existingClaim }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "audiobookshelf.fullname" . }}-config
+  annotations:
+  {{- with .Values.persistence.annotations  }}
+  {{ toYaml . | nindent 4 }}
+  {{- end }}
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "audiobookshelf.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.config.size | quote }}
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- end }}
+{{- end -}}
+{{- if not .Values.persistence.metadata.existingClaim }}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "audiobookshelf.fullname" . }}-metadata
+  annotations:
+  {{- with .Values.persistence.annotations  }}
+  {{ toYaml . | nindent 4 }}
+  {{- end }}
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "audiobookshelf.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.metadata.size | quote }}
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- end }}
+{{- end -}}
+{{- if not .Values.persistence.audiobooks.existingClaim }}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "audiobookshelf.fullname" . }}-audiobooks
+  annotations:
+  {{- with .Values.persistence.annotations  }}
+  {{ toYaml . | nindent 4 }}
+  {{- end }}
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "audiobookshelf.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.audiobooks.size | quote }}
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- end }}
+{{- end -}}
+{{- if not .Values.persistence.podcasts.existingClaim }}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "audiobookshelf.fullname" . }}-podcasts
+  annotations:
+  {{- with .Values.persistence.annotations  }}
+  {{ toYaml . | nindent 4 }}
+  {{- end }}
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "audiobookshelf.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.podcasts.size | quote }}
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- end }}
+{{- end -}}
+{{- end -}}

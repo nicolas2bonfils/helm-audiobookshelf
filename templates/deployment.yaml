@@ -47,6 +47,56 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: "{{ .Values.persistence.name }}-config"
+              mountPath: /config
+              {{- if .Values.persistence.config.subPath }}
+              subPath: {{ .Values.persistence.config.subPath }}
+              {{- end }}
+            - name: "{{ .Values.persistence.name }}-metadata"
+              mountPath: /metadata
+              {{- if .Values.persistence.metadata.subPath }}
+              subPath: {{ .Values.persistence.metadata.subPath }}
+              {{- end }}
+            - name: "{{ .Values.persistence.name }}-audiobooks"
+              mountPath: /audiobooks
+              {{- if .Values.persistence.audiobooks.subPath }}
+              subPath: {{ .Values.persistence.audiobooks.subPath }}
+              {{- end }}
+            - name: "{{ .Values.persistence.name }}-podcasts"
+              mountPath: /podcasts
+              {{- if .Values.persistence.podcasts.subPath }}
+              subPath: {{ .Values.persistence.podcasts.subPath }}
+              {{- end }}
+      volumes:
+        - name: "{{ .Values.persistence.name }}-config"
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (printf "%s-%s" (include "audiobookshelf.fullname" .) "config") .Values.persistence.config.existingClaim }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: "{{ .Values.persistence.name }}-metadata"
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (printf "%s-%s" (include "audiobookshelf.fullname" .) "metadata") .Values.persistence.metadata.existingClaim }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: "{{ .Values.persistence.name }}-audiobooks"
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (printf "%s-%s" (include "audiobookshelf.fullname" .) "audiobooks") .Values.persistence.audiobooks.existingClaim }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: "{{ .Values.persistence.name }}-podcasts"
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (printf "%s-%s" (include "audiobookshelf.fullname" .) "podcasts") .Values.persistence.podcasts.existingClaim }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
