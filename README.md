@@ -13,5 +13,5 @@ Currently that helm-chart is not (yet) deployed to a helm-registry. So you have 
 ```
 $ git checkout https://github.com/nicolas2bonfils/helm-audiobookshelf.git
 $ cd helm-audiobookshelf
-$ helm install -n audiobookshelf audiobookshelf . -f values.yml
+$ helm install -n audiobookshelf audiobookshelf . -f values.yaml
 ```
