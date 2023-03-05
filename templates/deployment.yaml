@@ -68,6 +68,8 @@ spec:
               {{- if .Values.persistence.podcasts.subPath }}
               subPath: {{ .Values.persistence.podcasts.subPath }}
               {{- end }}
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: "{{ .Values.persistence.name }}-config"
           {{- if .Values.persistence.enabled }}
@@ -97,6 +99,8 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: tmp
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
